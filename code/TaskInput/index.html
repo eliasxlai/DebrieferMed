@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="sortable.css">
+</head>
+<body>
+  <h1>Task Manager</h1>
+
+  <form id="taskForm">
+    <label for="taskInput">Task:</label>
+    <input type="text" id="taskInput" placeholder="Enter task...">
+    <button type="submit">Add Task</button>
+  </form>
+
+  <table id="taskTable">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="taskList">
+    </tbody>
+  </table>
+
+  <button id="exportButton">Export Tasks</button>
+
+  <script src="sortable.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

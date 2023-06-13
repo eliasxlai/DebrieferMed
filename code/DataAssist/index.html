@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Data Assist</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Data Assist</h1>
+    <div id="dropArea" class="drop-area">
+      <p class="drop-message">Drag and drop a video file here</p>
+      <label class="upload-label">
+        or click to upload
+        <input id="videoInput" type="file" class="file-input" accept=".mp4, .mov, .wmv, .avi">
+      </label>
+    </div>
+    <video id="uploadedVideo" controls></video>
+
+    <h2>Task Template</h2>
+    <table id="exportedTaskTable">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Feedback</th>
+          <th>Green</th>
+          <th>Yellow</th>
+          <th>Red</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically generated here -->
+      </tbody>
+    </table>
+
+    <h2>Feedback Summary</h2>
+    <table id="selectedTaskTable">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Feedback</th>
+          <th>Color</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically generated here -->
+      </tbody>
+    </table>
+
+    <button id="exportButton">Export to CSV</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
