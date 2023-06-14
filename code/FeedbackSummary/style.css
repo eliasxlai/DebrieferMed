@@ -14,6 +14,48 @@ h1 {
   text-align: center;
 }
 
+.drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.drop-message {
+  font-size: 18px;
+  color: #666;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-label:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.file-input {
+  display: none;
+}
+
+.video-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.video-player {
+  width: 640px;
+  height: 360px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -21,38 +63,82 @@ table {
 }
 
 th, td {
-  padding: 10px;
+  padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ccc;
 }
 
 th {
   font-weight: bold;
+  color: #333;
 }
 
-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
+tr:last-child td {
+  border-bottom: none;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.green, .yellow, .red {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: opacity 0.3s;
+  border: none;
+  padding: 0;
 }
 
 .green {
-  background-color: green;
-  color: #fff;
+  background-color: #6bbf57;
 }
 
 .yellow {
-  background-color: yellow;
-  color: #000;
+  background-color: #f8e71c;
 }
 
 .red {
-  background-color: red;
-  color: #fff;
+  background-color: #d0021b;
 }
 
-button:hover {
+button.green:hover, button.yellow:hover, button.red:hover {
   opacity: 0.8;
+}
+
+button.green:focus, button.yellow:focus, button.red:focus {
+  outline: none;
+}
+
+button.green:active, button.yellow:active, button.red:active {
+  transform: scale(0.95);
+}
+
+#exportCSVButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#exportCSVButton:hover {
+  background-color: #0056b3;
+}
+
+#exportCSVButton:focus {
+  outline: none;
+}
+
+#exportCSVButton:active {
+  transform: scale(0.95);
 }

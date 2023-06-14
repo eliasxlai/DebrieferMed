@@ -43,7 +43,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var taskIndex = event.target.dataset.taskIndex;
     var task = tasks[taskIndex];
     var feedback = event.target.parentNode.parentNode.querySelector('input').value;
-    var color = event.target.dataset.color;
+    var color = '';
+
+    if (event.target.classList.contains('green')) {
+      color = '5';
+    } else if (event.target.classList.contains('yellow')) {
+      color = '3';
+    } else if (event.target.classList.contains('red')) {
+      color = '1';
+    }
 
     var newRow = document.createElement('tr');
 
@@ -56,9 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     newRow.appendChild(feedbackCell);
 
     var colorCell = document.createElement('td');
-    var colorButton = document.createElement('button');
-    colorButton.className = color;
-    colorCell.appendChild(colorButton);
+    colorCell.textContent = color;
     newRow.appendChild(colorCell);
 
     var timestampCell = document.createElement('td');
@@ -77,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var urlParams = new URLSearchParams(window.location.search);
   var tasksParam = urlParams.get('tasks');
-  var tasks = decodeURIComponent(tasksParam).split(',');
+  var tasks = tasksParam ? tasksParam.split(',') : [];
 
   for (var i = 0; i < tasks.length; i++) {
     var newRow = document.createElement('tr');
@@ -96,21 +102,18 @@ document.addEventListener('DOMContentLoaded', function() {
     var greenButton = document.createElement('button');
     greenButton.className = 'green';
     greenButton.dataset.taskIndex = i;
-    greenButton.dataset.color = 'green';
     greenButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(greenButton);
 
     var yellowButton = document.createElement('button');
     yellowButton.className = 'yellow';
     yellowButton.dataset.taskIndex = i;
-    yellowButton.dataset.color = 'yellow';
     yellowButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(yellowButton);
 
     var redButton = document.createElement('button');
     redButton.className = 'red';
     redButton.dataset.taskIndex = i;
-    redButton.dataset.color = 'red';
     redButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(redButton);
 
@@ -119,36 +122,34 @@ document.addEventListener('DOMContentLoaded', function() {
     exportedTaskTable.appendChild(newRow);
   }
 
-  function exportToCSV() {
-  var csvContent = "data:text/csv;charset=utf-8,";
+  exportButton.addEventListener('click', function() {
+    var csvContent = "data:text/csv;charset=utf-8,";
 
-  // Header row
-  var headers = Array.from(document.querySelectorAll("#selectedTaskTable th")).map(function (header) {
-    return header.textContent;
+    // Column names
+    csvContent += "Task,Feedback,Color,Timestamp\r\n";
+
+    var rows = selectedTaskTable.querySelectorAll('tr');
+
+    rows.forEach(function(row) {
+      var columns = row.querySelectorAll('td');
+      var rowData = Array.from(columns).map(function(column) {
+        return column.textContent;
+      });
+
+      // Exclude empty rows
+      if (rowData.some(function(data) {
+        return data.trim() !== '';
+      })) {
+        csvContent += rowData.join(',') + "\r\n";
+      }
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'feedback_summary.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
-  csvContent += headers.join(",") + "\n";
-
-  // Data rows
-  var rows = Array.from(document.querySelectorAll("#selectedTaskTable tbody tr")).map(function (row) {
-    return Array.from(row.querySelectorAll("td")).map(function (cell) {
-      return cell.textContent;
-    }).join(",");
-  });
-  csvContent += rows.join("\n");
-
-  // Create a temporary link and download the CSV file
-  var link = document.createElement("a");
-  link.href = encodeURI(csvContent);
-  link.download = "feedback_summary.csv";
-  link.style.display = "none";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-var exportButton = document.getElementById("exportButton");
-exportButton.addEventListener("click", exportToCSV);
-
-var exportButton = document.getElementById("exportButton");
-exportButton.addEventListener("click", exportToCSV);
 });
