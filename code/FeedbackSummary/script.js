@@ -113,8 +113,44 @@ function seekToTimestamp(timestampInSeconds) {
   video.currentTime = timestampInSeconds;
 }
 
+function saveCSVFile(csvData) {
+  const formData = new FormData();
+  formData.append("csvData", csvData);
+
+  fetch("save_csv.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      // You can perform additional actions after the CSV file is saved
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
+function saveCSVFile(csvData) {
+  const formData = new FormData();
+  formData.append("csvData", csvData);
+
+  fetch("save_csv.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      // You can perform additional actions after the CSV file is saved
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
 function exportToCSV() {
-  let csvContent = "data:text/csv;charset=utf-8,";
+  let csvContent = "";
 
   // Get the table
   const table = document.getElementById("csv-table");
@@ -144,12 +180,6 @@ function exportToCSV() {
     csvContent += i === 0 ? row : "\n" + row; // Add row with line break
   }
 
-  // Create a download link for the CSV file
-  const encodedURI = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedURI);
-  link.setAttribute("download", "table_data.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // Save the CSV file on the server
+  saveCSVFile(csvContent);
 }
