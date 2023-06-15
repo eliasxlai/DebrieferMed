@@ -8,10 +8,16 @@
   <h1>Data Assist</h1>
 
   <div id="videoContainer">
-    <h2>Video Selection</h2>
-    <input type="text" id="teamIDInput" placeholder="Team ID">
-    <input type="text" id="takeNumberInput" placeholder="Take Number">
-    <button id="videoButton">Select Video</button>
+    <h2>Find Video</h2>
+    <div>
+      <label for="teamID">Team ID:</label>
+      <input type="text" id="teamID" placeholder="Enter Team ID">
+    </div>
+    <div>
+      <label for="takeNumber">Take Number:</label>
+      <input type="text" id="takeNumber" placeholder="Enter Take Number">
+    </div>
+    <button id="findVideoButton">Find Video</button>
     <video id="uploadedVideo" controls></video>
   </div>
 
@@ -20,10 +26,12 @@
     <thead>
       <tr>
         <th>Task</th>
-        <th>User Input</th>
-        <th>Green</th>
-        <th>Yellow</th>
-        <th>Red</th>
+        <th>Feedback</th>
+        <th>Color</th>
+        <th></th>
+        <th></th>
+        <th>Team ID</th>
+        <th>Take Number</th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +47,8 @@
         <th>Feedback</th>
         <th>Color</th>
         <th>Timestamp</th>
+        <th>Team ID</th>
+        <th>Take Number</th>
       </tr>
     </thead>
     <tbody>

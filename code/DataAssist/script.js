@@ -1,31 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
   var videoContainer = document.getElementById('videoContainer');
-  var teamIDInput = document.getElementById('teamIDInput');
-  var takeNumberInput = document.getElementById('takeNumberInput');
-  var videoButton = document.getElementById('videoButton');
+  var teamIDInput = document.getElementById('teamID');
+  var takeNumberInput = document.getElementById('takeNumber');
+  var findVideoButton = document.getElementById('findVideoButton');
   var uploadedVideo = document.getElementById('uploadedVideo');
   var exportedTaskTable = document.getElementById('exportedTaskTable');
   var selectedTaskTable = document.getElementById('selectedTaskTable');
   var exportButton = document.getElementById('exportButton');
+  var videoTimestamp = 0;
+  var teamID = '';
+  var takeNumber = '';
 
-  var videoPath = '';
+  findVideoButton.addEventListener('click', function() {
+    teamID = teamIDInput.value;
+    takeNumber = takeNumberInput.value;
+    var videoPath = '../Data/Videos/TID' + teamID + 'TN' + takeNumber + '.mp4';
+    uploadedVideo.src = videoPath;
+    uploadedVideo.load();
 
-  videoButton.addEventListener('click', function() {
-    var teamID = teamIDInput.value;
-    var takeNumber = takeNumberInput.value;
+    var exportedTableRows = exportedTaskTable.getElementsByTagName('tr');
+    var rowCount = exportedTableRows.length;
 
-    if (teamID && takeNumber) {
-      videoPath = '../Data/Videos/TID' + teamID + 'TN' + takeNumber + '.mp4';
-      uploadedVideo.src = videoPath;
+    for (var i = 1; i < rowCount; i++) {
+      var teamIDCell = document.createElement('td');
+      teamIDCell.textContent = teamID;
+      exportedTableRows[i].appendChild(teamIDCell);
+
+      var takeNumberCell = document.createElement('td');
+      takeNumberCell.textContent = takeNumber;
+      exportedTableRows[i].appendChild(takeNumberCell);
     }
   });
 
   uploadedVideo.addEventListener('timeupdate', function() {
-    var videoTimestamp = Math.floor(uploadedVideo.currentTime);
-    var timestampCell = document.getElementById('videoTimestamp');
-    if (timestampCell) {
-      timestampCell.textContent = formatTimestamp(videoTimestamp);
-    }
+    videoTimestamp = Math.floor(uploadedVideo.currentTime);
   });
 
   function addToSelectedTable(event) {
@@ -57,8 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
     newRow.appendChild(colorCell);
 
     var timestampCell = document.createElement('td');
-    timestampCell.textContent = formatTimestamp(uploadedVideo.currentTime);
+    timestampCell.textContent = formatTimestamp(videoTimestamp);
     newRow.appendChild(timestampCell);
+
+    var teamIDCell = document.createElement('td');
+    teamIDCell.textContent = teamID;
+    newRow.appendChild(teamIDCell);
+
+    var takeNumberCell = document.createElement('td');
+    takeNumberCell.textContent = takeNumber;
+    newRow.appendChild(takeNumberCell);
 
     selectedTaskTable.appendChild(newRow);
   }
@@ -70,7 +86,17 @@ document.addEventListener('DOMContentLoaded', function() {
     return timestamp;
   }
 
-  var tasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4', 'Task 5'];
+  var urlParams = new URLSearchParams(window.location.search);
+  var teamIDParam = urlParams.get('teamID');
+  var takeNumberParam = urlParams.get('takeNumber');
+  var tasksParam = urlParams.get('tasks');
+  var tasks = tasksParam ? tasksParam.split(',') : [];
+
+  if (teamIDParam && takeNumberParam) {
+    teamIDInput.value = teamIDParam;
+    takeNumberInput.value = takeNumberParam;
+    findVideoButton.click();
+  }
 
   for (var i = 0; i < tasks.length; i++) {
     var newRow = document.createElement('tr');
@@ -85,36 +111,44 @@ document.addEventListener('DOMContentLoaded', function() {
     feedbackCell.appendChild(feedbackInput);
     newRow.appendChild(feedbackCell);
 
-    var colorCell = document.createElement('td');
+    var greenCell = document.createElement('td');
     var greenButton = document.createElement('button');
-    greenButton.className = 'green';
+    greenButton.textContent = 'Green';
+    greenButton.classList.add('green');
     greenButton.dataset.taskIndex = i;
     greenButton.addEventListener('click', addToSelectedTable);
-    colorCell.appendChild(greenButton);
+    greenCell.appendChild(greenButton);
+    newRow.appendChild(greenCell);
+
+    var yellowCell = document.createElement('td');
     var yellowButton = document.createElement('button');
-    yellowButton.className = 'yellow';
+    yellowButton.textContent = 'Yellow';
+    yellowButton.classList.add('yellow');
     yellowButton.dataset.taskIndex = i;
     yellowButton.addEventListener('click', addToSelectedTable);
-    colorCell.appendChild(yellowButton);
+    yellowCell.appendChild(yellowButton);
+    newRow.appendChild(yellowCell);
+
+    var redCell = document.createElement('td');
     var redButton = document.createElement('button');
-    redButton.className = 'red';
+    redButton.textContent = 'Red';
+    redButton.classList.add('red');
     redButton.dataset.taskIndex = i;
     redButton.addEventListener('click', addToSelectedTable);
-    colorCell.appendChild(redButton);
-    newRow.appendChild(colorCell);
+    redCell.appendChild(redButton);
+    newRow.appendChild(redCell);
 
     exportedTaskTable.appendChild(newRow);
   }
 
   exportButton.addEventListener('click', function() {
-    var csvContent = 'data:text/csv;charset=utf-8,';
+    var csvContent = 'Task,Feedback,Color,Timestamp\r\n';
 
-    var columnNames = ['Task', 'Feedback', 'Color', 'Timestamp'];
-    csvContent += columnNames.join(',') + "\r\n";
+    var selectedRows = selectedTaskTable.getElementsByTagName('tr');
+    var rowCount = selectedRows.length;
 
-    var rows = selectedTaskTable.querySelectorAll('tr');
-    Array.prototype.forEach.call(rows, function(row) {
-      var rowData = Array.from(row.cells).map(function(column) {
+    for (var i = 1; i < rowCount; i++) {
+      var rowData = Array.from(selectedRows[i].querySelectorAll('td')).map(function(column) {
         return column.textContent;
       });
 
@@ -124,12 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
       })) {
         csvContent += rowData.join(',') + "\r\n";
       }
-    });
+    }
 
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodedUri);
     link.setAttribute('download', 'feedback_summary.csv');
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
