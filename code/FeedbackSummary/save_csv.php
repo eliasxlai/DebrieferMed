@@ -1,13 +1,12 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['csvData'])) {
   $csvData = $_POST['csvData'];
-  $timestamp = date("Y-m-d_H-i-s");
-  $filename = "Student_CSVs/table_data_$timestamp.csv";
+  $filename = "../Data/student_data.csv";
 
-  // Save the CSV data to the server
-  file_put_contents($filename, $csvData);
+  // Append the CSV data to the existing file
+  file_put_contents($filename, $csvData, FILE_APPEND | LOCK_EX);
 
-  echo "CSV file saved successfully.";
+  echo "CSV data saved successfully.";
 } else {
   echo "Invalid request.";
 }
