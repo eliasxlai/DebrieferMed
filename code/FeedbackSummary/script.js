@@ -36,14 +36,29 @@ function displayCSV(file) {
     const contents = e.target.result;
     const rows = contents.split('\n');
 
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < rows.length-1; i++) {
       const cells = rows[i].split(',');
       const row = document.createElement('tr');
 
       for (let j = 0; j < cells.length; j++) {
         const cell = document.createElement(i === 0 ? 'th' : 'td');
 
-        if (i > 0 && j === 2) {
+        if (i > 0 && j === 3) {
+          // Timestamp column (assuming it's the fourth column)
+          const timestampValue = cells[j].trim();
+          const timestampParts = timestampValue.split(':');
+          const timestampInSeconds =
+            parseInt(timestampParts[0], 10) * 3600 +
+            parseInt(timestampParts[1], 10) * 60 +
+            parseInt(timestampParts[2], 10);
+
+          const timestampLink = document.createElement('a');
+          timestampLink.href = `javascript:seekToTimestamp(${timestampInSeconds})`;
+          timestampLink.textContent = timestampValue;
+          timestampLink.classList.add('timestamp-column');
+
+          cell.appendChild(timestampLink);
+        } else if (i > 0 && j === 2) {
           // Color column (assuming it's the third column)
           const colorValue = parseInt(cells[j].trim(), 10);
           const colorRectangle = document.createElement('div');
@@ -59,20 +74,6 @@ function displayCSV(file) {
 
           cell.classList.add('color-column');
           cell.appendChild(colorRectangle);
-        } else if (i > 0 && j === 3) {
-          // Timestamp column (assuming it's the fourth column)
-          const timestampValue = cells[j].trim();
-          const timestampParts = timestampValue.split(':');
-          const timestampInSeconds =
-            parseInt(timestampParts[0], 10) * 3600 +
-            parseInt(timestampParts[1], 10) * 60 +
-            parseInt(timestampParts[2], 10);
-
-          const timestampLink = document.createElement('a');
-          timestampLink.href = `javascript:seekToTimestamp(${timestampInSeconds})`;
-          timestampLink.textContent = timestampValue;
-
-          cell.appendChild(timestampLink);
         } else {
           cell.textContent = cells[j];
         }
@@ -91,4 +92,3 @@ function seekToTimestamp(timestampInSeconds) {
   const video = document.getElementById('main-video');
   video.currentTime = timestampInSeconds;
 }
- 
