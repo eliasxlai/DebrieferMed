@@ -131,17 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var rows = selectedTaskTable.querySelectorAll('tr');
 
     rows.forEach(function(row) {
+      var rowData = [];
       var columns = row.querySelectorAll('td');
-      var rowData = Array.from(columns).map(function(column) {
-        return column.textContent;
+
+      columns.forEach(function(column) {
+        rowData.push(column.textContent);
       });
 
-      // Exclude empty rows
-      if (rowData.some(function(data) {
-        return data.trim() !== '';
-      })) {
-        csvContent += rowData.join(',') + "\r\n";
-      }
+      csvContent += rowData.join(',') + "\r\n";
     });
 
     var encodedUri = encodeURI(csvContent);
