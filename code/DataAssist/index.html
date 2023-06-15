@@ -1,55 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
   <title>Data Assist</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Data Assist</h1>
-    <div id="dropArea" class="drop-area">
-      <p class="drop-message">Drag and drop a video file here</p>
-      <label class="upload-label">
-        or click to upload
-        <input id="videoInput" type="file" class="file-input" accept=".mp4, .mov, .wmv, .avi">
-      </label>
-    </div>
+  <h1>Data Assist</h1>
+
+  <div id="videoContainer">
+    <h2>Video Selection</h2>
+    <input type="text" id="teamIDInput" placeholder="Team ID">
+    <input type="text" id="takeNumberInput" placeholder="Take Number">
+    <button id="videoButton">Select Video</button>
     <video id="uploadedVideo" controls></video>
-
-    <h2>Task Template</h2>
-    <table id="exportedTaskTable">
-      <thead>
-        <tr>
-          <th>Task</th>
-          <th>Feedback</th>
-          <th>Green</th>
-          <th>Yellow</th>
-          <th>Red</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Table rows will be dynamically generated here -->
-      </tbody>
-    </table>
-
-    <h2>Feedback Summary</h2>
-    <table id="selectedTaskTable">
-      <thead>
-        <tr>
-          <th>Task</th>
-          <th>Feedback</th>
-          <th>Color</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Table rows will be dynamically generated here -->
-      </tbody>
-    </table>
-
-    <button id="saveCsvButton" class="blue-button">Save as CSV</button>
   </div>
+
+  <h2>Exported Tasks</h2>
+  <table id="exportedTaskTable">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>User Input</th>
+        <th>Green</th>
+        <th>Yellow</th>
+        <th>Red</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JavaScript -->
+    </tbody>
+  </table>
+
+  <h2>Feedback Summary</h2>
+  <table id="selectedTaskTable">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Feedback</th>
+        <th>Color</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JavaScript -->
+    </tbody>
+  </table>
+
+  <button id="exportButton">Export Feedback Summary as CSV</button>
 
   <script src="script.js"></script>
 </body>

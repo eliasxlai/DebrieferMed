@@ -1,0 +1,23 @@
+#drop-area {
+  border: 2px dashed #ccc;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ccc;
+  cursor: pointer;
+}
+
+#fileList {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#fileList li {
+  list-style-type: none;
+}

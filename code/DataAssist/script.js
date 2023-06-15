@@ -1,42 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var videoInput = document.getElementById('videoInput');
+  var videoContainer = document.getElementById('videoContainer');
+  var teamIDInput = document.getElementById('teamIDInput');
+  var takeNumberInput = document.getElementById('takeNumberInput');
+  var videoButton = document.getElementById('videoButton');
   var uploadedVideo = document.getElementById('uploadedVideo');
-  var dropArea = document.getElementById('dropArea');
   var exportedTaskTable = document.getElementById('exportedTaskTable');
   var selectedTaskTable = document.getElementById('selectedTaskTable');
   var exportButton = document.getElementById('exportButton');
 
-  var videoTimestamp = null;
+  var videoPath = '';
 
-  function handleFile(file) {
-    var videoURL = URL.createObjectURL(file);
-    uploadedVideo.src = videoURL;
-  }
+  videoButton.addEventListener('click', function() {
+    var teamID = teamIDInput.value;
+    var takeNumber = takeNumberInput.value;
 
-  dropArea.addEventListener('dragover', function(event) {
-    event.preventDefault();
-    dropArea.classList.add('drag-over');
-  });
-
-  dropArea.addEventListener('dragleave', function(event) {
-    event.preventDefault();
-    dropArea.classList.remove('drag-over');
-  });
-
-  dropArea.addEventListener('drop', function(event) {
-    event.preventDefault();
-    dropArea.classList.remove('drag-over');
-    var file = event.dataTransfer.files[0];
-    handleFile(file);
-  });
-
-  videoInput.addEventListener('change', function(event) {
-    var file = event.target.files[0];
-    handleFile(file);
+    if (teamID && takeNumber) {
+      videoPath = '../Data/Videos/TID' + teamID + 'TN' + takeNumber + '.mp4';
+      uploadedVideo.src = videoPath;
+    }
   });
 
   uploadedVideo.addEventListener('timeupdate', function() {
-    videoTimestamp = Math.floor(uploadedVideo.currentTime);
+    var videoTimestamp = Math.floor(uploadedVideo.currentTime);
+    var timestampCell = document.getElementById('videoTimestamp');
+    if (timestampCell) {
+      timestampCell.textContent = formatTimestamp(videoTimestamp);
+    }
   });
 
   function addToSelectedTable(event) {
@@ -68,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     newRow.appendChild(colorCell);
 
     var timestampCell = document.createElement('td');
-    timestampCell.textContent = formatTimestamp(videoTimestamp);
+    timestampCell.textContent = formatTimestamp(uploadedVideo.currentTime);
     newRow.appendChild(timestampCell);
 
     selectedTaskTable.appendChild(newRow);
@@ -81,9 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return timestamp;
   }
 
-  var urlParams = new URLSearchParams(window.location.search);
-  var tasksParam = urlParams.get('tasks');
-  var tasks = tasksParam ? tasksParam.split(',') : [];
+  var tasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4', 'Task 5'];
 
   for (var i = 0; i < tasks.length; i++) {
     var newRow = document.createElement('tr');
@@ -104,41 +91,39 @@ document.addEventListener('DOMContentLoaded', function() {
     greenButton.dataset.taskIndex = i;
     greenButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(greenButton);
-
     var yellowButton = document.createElement('button');
     yellowButton.className = 'yellow';
     yellowButton.dataset.taskIndex = i;
     yellowButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(yellowButton);
-
     var redButton = document.createElement('button');
     redButton.className = 'red';
     redButton.dataset.taskIndex = i;
     redButton.addEventListener('click', addToSelectedTable);
     colorCell.appendChild(redButton);
-
     newRow.appendChild(colorCell);
 
     exportedTaskTable.appendChild(newRow);
   }
 
   exportButton.addEventListener('click', function() {
-    var csvContent = "data:text/csv;charset=utf-8,";
+    var csvContent = 'data:text/csv;charset=utf-8,';
 
-    // Column names
-    csvContent += "Task,Feedback,Color,Timestamp\r\n";
+    var columnNames = ['Task', 'Feedback', 'Color', 'Timestamp'];
+    csvContent += columnNames.join(',') + "\r\n";
 
     var rows = selectedTaskTable.querySelectorAll('tr');
-
-    rows.forEach(function(row) {
-      var rowData = [];
-      var columns = row.querySelectorAll('td');
-
-      columns.forEach(function(column) {
-        rowData.push(column.textContent);
+    Array.prototype.forEach.call(rows, function(row) {
+      var rowData = Array.from(row.cells).map(function(column) {
+        return column.textContent;
       });
 
-      csvContent += rowData.join(',') + "\r\n";
+      // Exclude empty rows
+      if (rowData.some(function(data) {
+        return data.trim() !== '';
+      })) {
+        csvContent += rowData.join(',') + "\r\n";
+      }
     });
 
     var encodedUri = encodeURI(csvContent);

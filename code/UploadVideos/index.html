@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload Example</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="drop-area">
+    <h1>Drag and Drop or Click to Upload</h1>
+    <input type="file" id="fileElem" multiple accept="video/*" style="display:none">
+    <label class="button" for="fileElem">Select Files</label>
+    <div id="fileList"></div>
+  </div>
+
+  <button onclick="saveFiles()">Save Files</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

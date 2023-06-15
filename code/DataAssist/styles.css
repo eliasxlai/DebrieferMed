@@ -1,130 +1,107 @@
 body {
-  background-color: #f9f9f9;
   font-family: Arial, sans-serif;
+  background-color: #F5F5F5;
+  color: #333;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
 
 h1 {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin: 20px 0;
+  text-align: center;
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin: 20px 0;
+  margin-top: 30px;
 }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+#videoContainer {
+  margin-bottom: 30px;
 }
 
-.drop-area {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  text-align: center;
+#videoContainer input {
+  margin-right: 10px;
+}
+
+#videoButton {
+  background-color: #2196F3;
+  color: #FFF;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
   cursor: pointer;
-  background-color: #f4f4f4;
-  transition: background-color 0.3s;
-}
-
-.drop-area.drag-over {
-  background-color: #ebebeb;
-}
-
-.drop-message {
-  display: block;
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #999;
-}
-
-.file-input {
-  display: none;
-}
-
-.upload-label {
-  cursor: pointer;
-  color: #007aff;
-  font-weight: bold;
 }
 
 #uploadedVideo {
   width: 640px;
   height: 360px;
+  margin: 0 auto;
   display: block;
-  margin: 20px auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-table {
-  width: 100%;
+#exportedTaskTable,
+#selectedTaskTable {
   border-collapse: collapse;
+  width: 100%;
   margin-bottom: 20px;
 }
 
-th,
-td {
+#exportedTaskTable th,
+#selectedTaskTable th {
+  background-color: #EEE;
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
 }
 
-th {
-  font-weight: bold;
+#exportedTaskTable td,
+#selectedTaskTable td {
+  border: 1px solid #CCC;
+  padding: 10px;
+}
+
+#exportedTaskTable .green {
+  background-color: green;
+  color: #FFF;
+}
+
+#exportedTaskTable .yellow {
+  background-color: yellow;
   color: #333;
 }
 
-tr:last-child td {
-  border-bottom: none;
+#exportedTaskTable .red {
+  background-color: red;
+  color: #FFF;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s;
+#selectedTaskTable .green,
+#selectedTaskTable .yellow,
+#selectedTaskTable .red {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-color: #007aff;
+#selectedTaskTable .green {
+  background-color: green;
 }
 
-button {
-  padding: 6px 12px;
+#selectedTaskTable .yellow {
+  background-color: yellow;
+}
+
+#selectedTaskTable .red {
+  background-color: red;
+}
+
+#exportButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #2196F3;
+  color: #FFF;
   border: none;
   border-radius: 4px;
-  color: #fff;
-  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button.green {
-  background-color: #28a745;
-}
-
-button.yellow {
-  background-color: #ffc107;
-}
-
-button.red {
-  background-color: #dc3545;
-}
-
-.blue-button {
-  background-color: #007aff;
-}
-
-button:hover {
-  opacity: 0.8;
 }
