@@ -1,39 +1,89 @@
+body {
+  background-color: #f0f0f0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.container {
+  width: 600px;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
 #dropArea {
-  width: 300px;
-  height: 150px;
-  border: 2px dashed lightgray;
+  width: 100%;
+  height: 200px;
+  border: 2px dashed #ccc;
   text-align: center;
   padding: 20px;
   cursor: pointer;
-  margin-bottom: 10px;
+}
+
+#dropArea p {
+  font-size: 16px;
+  margin: 0;
 }
 
 #fileList {
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .videoPreview {
-  width: 300px;
+  width: 100%;
 }
 
 #progressBarContainer {
-  width: 200px;
+  width: 100%;
   height: 20px;
-  background-color: lightgray;
-  margin-top: 10px;
+  background-color: #f0f0f0;
+  margin-top: 20px;
 }
 
 #progressBar {
   width: 0%;
   height: 100%;
-  background-color: green;
-}
-
-#inputContainer {
-  margin-top: 10px;
+  background-color: #4cd964;
+  transition: width 0.3s ease-in-out;
 }
 
 #uploadButton {
   display: block;
-  margin-top: 10px;
+  margin-top: 20px;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#uploadButton:hover {
+  background-color: #0056b3;
 }
