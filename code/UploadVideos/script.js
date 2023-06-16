@@ -35,44 +35,52 @@ function displayFilePreview(file) {
 }
 
 function uploadFiles() {
-    if (filesToUpload.length === 0) {
-        alert('Please select some video files to upload.');
-        return;
-    }
+  if (filesToUpload.length === 0) {
+      alert('Please select some video files to upload.');
+      return;
+  }
 
-    var formData = new FormData();
+  var teamId = document.getElementById('teamId').value;
+  var takeNumber = document.getElementById('takeNumber').value;
 
-    for (var i = 0; i < filesToUpload.length; i++) {
-        var file = filesToUpload[i];
-        var fileName = 'TID' + file.teamId + 'TN' + file.takeNumber + '.mp4';
-        formData.append('files[]', file, fileName);
-    }
+  if (teamId === '' || takeNumber === '') {
+      alert('Please enter the Team ID and Take Number.');
+      return;
+  }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'upload.php', true);
+  var formData = new FormData();
 
-    xhr.upload.onprogress = function (e) {
-        if (e.lengthComputable) {
-            var percentage = (e.loaded / e.total) * 100;
-            var progressBar = document.getElementById('progressBar');
-            progressBar.style.width = percentage + '%';
-        }
-    };
+  for (var i = 0; i < filesToUpload.length; i++) {
+      var file = filesToUpload[i];
+      var fileName = 'TID' + teamId + 'TN' + takeNumber + '.mp4';
+      formData.append('files[]', file, fileName);
+  }
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            alert('Files uploaded successfully.');
-        } else {
-            alert('File upload failed.');
-        }
-    };
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'upload.php', true);
 
-    xhr.send(formData);
+  xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+          var percentage = (e.loaded / e.total) * 100;
+          var progressBar = document.getElementById('progressBar');
+          progressBar.style.width = percentage + '%';
+      }
+  };
 
-    // Clear the file list and reset the files
-    var fileList = document.getElementById('fileList');
-    fileList.innerHTML = '';
-    filesToUpload = [];
+  xhr.onload = function () {
+      if (xhr.status === 200) {
+          alert('Files uploaded successfully.');
+      } else {
+          alert('File upload failed.');
+      }
+  };
+
+  xhr.send(formData);
+
+  // Clear the file list and reset the files
+  var fileList = document.getElementById('fileList');
+  fileList.innerHTML = '';
+  filesToUpload = [];
 }
 
 // Add event listeners for drag and drop
