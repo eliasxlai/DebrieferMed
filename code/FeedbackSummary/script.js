@@ -51,6 +51,20 @@ document.getElementById('videoForm').addEventListener('submit', function(event) 
                         }
                         tableRow.appendChild(tableCell);
                     });
+                    
+                    if (rowIndex === 0) {
+                        var reflectionHeaderCell = document.createElement('th');
+                        reflectionHeaderCell.textContent = 'Reflection';
+                        tableRow.appendChild(reflectionHeaderCell);
+                    } else {
+                        var reflectionInputCell = document.createElement('td');
+                        var reflectionInput = document.createElement('input');
+                        reflectionInput.type = 'text';
+                        reflectionInput.classList.add('reflection-input');
+                        reflectionInputCell.appendChild(reflectionInput);
+                        tableRow.appendChild(reflectionInputCell);
+                    }
+                    
                     table.appendChild(tableRow);
                 }
             });
