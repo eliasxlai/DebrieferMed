@@ -142,16 +142,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   exportButton.addEventListener('click', function() {
-    var csvContent = 'Task,Feedback,Color,Timestamp\r\n';
-
     var selectedRows = selectedTaskTable.getElementsByTagName('tr');
     var rowCount = selectedRows.length;
-
+  
+    var csvContent = 'Task,Feedback,Color,Timestamp,Team ID,Take Number\r\n';
+  
     for (var i = 1; i < rowCount; i++) {
       var rowData = Array.from(selectedRows[i].querySelectorAll('td')).map(function(column) {
         return column.textContent;
       });
-
+  
       // Exclude empty rows
       if (rowData.some(function(data) {
         return data.trim() !== '';
@@ -159,14 +159,23 @@ document.addEventListener('DOMContentLoaded', function() {
         csvContent += rowData.join(',') + "\r\n";
       }
     }
-
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodedUri);
-    link.setAttribute('download', 'feedback_summary.csv');
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  
+    // Send the CSV content to the server for saving
+    saveCSVFile(csvContent);
   });
+  
+  // Function to send the CSV data to the server
+  function saveCSVFile(csvContent) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'save_csv.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // File saved successfully
+        console.log('CSV file saved on the server');
+      }
+    };
+    xhr.send('csvContent=' + encodeURIComponent(csvContent));
+  }
+  
 });

@@ -131,24 +131,6 @@ function saveCSVFile(csvData) {
     });
 }
 
-function saveCSVFile(csvData) {
-  const formData = new FormData();
-  formData.append("csvData", csvData);
-
-  fetch("save_csv.php", {
-    method: "POST",
-    body: formData,
-  })
-    .then(response => response.text())
-    .then(data => {
-      console.log(data);
-      // You can perform additional actions after the CSV file is saved
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
-}
-
 function exportToCSV() {
   let csvContent = "";
 
@@ -163,10 +145,13 @@ function exportToCSV() {
     const cells = rows[i].querySelectorAll("th, td");
     let row = "";
 
+    // Skip the first row (column names)
+    if (i === 0) continue;
+
     // Iterate over cells in the row
     for (let j = 0; j < cells.length; j++) {
       let cellContent;
-      if (j === cells.length - 1 && i > 0) {
+      if (j === cells.length - 1) {
         // For the reflections column, get the input value instead of innerText
         const input = cells[j].querySelector("input");
         cellContent = input ? input.value : "";
@@ -177,9 +162,17 @@ function exportToCSV() {
       row += j === 0 ? cellContent : "," + cellContent; // Add cell content with comma separation
     }
 
-    csvContent += i === 0 ? row : "\n" + row; // Add row with line break
+    csvContent += i === 1 ? row : "\n" + row; // Add row with line break
   }
 
   // Save the CSV file on the server
   saveCSVFile(csvContent);
+
+  // Clear the input values and add a new row to the table
+  const reflectionInputs = table.querySelectorAll("tr:not(:first-child) td:last-child input");
+  reflectionInputs.forEach(input => (input.value = ""));
+
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `<td></td><td></td><td></td><td></td><td><input type="text"></td>`;
+  table.appendChild(newRow);
 }
