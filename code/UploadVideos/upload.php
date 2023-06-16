@@ -2,20 +2,23 @@
 $uploadDir = '../Data/Videos/';
 
 if (!empty($_FILES['files']['name'][0])) {
-  $files = $_FILES['files'];
+    $fileCount = count($_FILES['files']['name']);
 
-  for ($i = 0; $i < count($files['name']); $i++) {
-    $fileName = $files['name'][$i];
-    $fileTmpName = $files['tmp_name'][$i];
-    $fileDestination = $uploadDir . $fileName;
+    for ($i = 0; $i < $fileCount; $i++) {
+        $tempName = $_FILES['files']['tmp_name'][$i];
+        $fileName = $_FILES['files']['name'][$i];
+        $targetPath = $uploadDir . $fileName;
 
-    if (move_uploaded_file($fileTmpName, $fileDestination)) {
-      echo "File $fileName uploaded successfully.\n";
-    } else {
-      echo "Error uploading file $fileName.\n";
+        if (move_uploaded_file($tempName, $targetPath)) {
+            // File uploaded successfully
+            echo 'Success';
+        } else {
+            // Failed to move the uploaded file
+            echo 'Error';
+        }
     }
-  }
 } else {
-  echo "No files received.\n";
+    // No files uploaded
+    echo 'Error';
 }
 ?>

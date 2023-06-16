@@ -1,23 +1,39 @@
-#drop-area {
-  border: 2px dashed #ccc;
+#dropArea {
   width: 300px;
-  margin: 0 auto;
-  padding: 20px;
+  height: 150px;
+  border: 2px dashed lightgray;
   text-align: center;
-}
-
-.button {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #ccc;
+  padding: 20px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 #fileList {
-  margin-top: 20px;
-  text-align: left;
+  margin-bottom: 10px;
 }
 
-#fileList li {
-  list-style-type: none;
+.videoPreview {
+  width: 300px;
+}
+
+#progressBarContainer {
+  width: 200px;
+  height: 20px;
+  background-color: lightgray;
+  margin-top: 10px;
+}
+
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background-color: green;
+}
+
+#inputContainer {
+  margin-top: 10px;
+}
+
+#uploadButton {
+  display: block;
+  margin-top: 10px;
 }

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Feedback Viewer</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="script.js"></script>
+    <title>Video Player</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="left-pane">
-      <h1>Upload Video</h1>
-      <div id="drop-container" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
-        <p>Drag and drop the video and CSV file here</p>
-      </div>
-      <div id="video-container"></div>
+    <div class="container">
+        <h1>Video Player</h1>
+        <form id="videoForm">
+            <label for="teamID">Team ID:</label>
+            <input type="text" id="teamID" required>
+            <label for="takeNumber">Take Number:</label>
+            <input type="text" id="takeNumber" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="split-container">
+            <div class="left-pane" id="videoPlayer"></div>
+            <div class="right-pane">
+                <h2>Educator Data</h2>
+                <table id="educatorTable">
+                    <!-- Table content will be dynamically added by JavaScript -->
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="right-pane">
-      <h1>CSV Data</h1>
-      <div class="table-wrapper">
-        <table id="csv-table"></table>
-      </div>
-      <div class="export-button">
-        <button onclick="exportToCSV()">Export CSV</button>
-      </div>
-    </div>
-  </div>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>File Upload Example</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+    <title>File Upload Example</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div id="drop-area">
-    <h1>Drag and Drop or Click to Upload</h1>
-    <input type="file" id="fileElem" multiple accept="video/*" style="display:none">
-    <label class="button" for="fileElem">Select Files</label>
+    <h1>File Upload Example</h1>
+    <div>
+        <label for="teamId">Team ID:</label>
+        <input type="text" id="teamId" required>
+    </div>
+    <div>
+        <label for="takeNumber">Take Number:</label>
+        <input type="text" id="takeNumber" required>
+    </div>
+    <div id="dropArea">
+        <p>Drag and drop a video file here or click to select a file:</p>
+        <input type="file" id="fileInput" multiple accept="video/*">
+    </div>
     <div id="fileList"></div>
-  </div>
-
-  <button onclick="saveFiles()">Save Files</button>
-
-  <script src="script.js"></script>
+    <div id="progressBarContainer">
+        <div id="progressBar"></div>
+    </div>
+    <button id="uploadButton" onclick="uploadFiles()">Upload Files</button>
+    <script src="script.js"></script>
 </body>
 </html>
