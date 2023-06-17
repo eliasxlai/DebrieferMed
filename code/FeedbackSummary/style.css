@@ -36,6 +36,8 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   max-height: calc(100vh - 240px); /* Adjust the value as needed to fit your layout */
+  margin-left: 20px; /* Add a small margin */
+  margin-bottom: -10px; /* Adjust the negative margin as needed */
 }
 
 h2 {
@@ -137,4 +139,21 @@ th {
   border-color: #4CAF50;
   outline: none;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.timeline {
+  position: relative;
+  height: 8px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
 }
