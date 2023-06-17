@@ -144,14 +144,14 @@ document.addEventListener('DOMContentLoaded', function() {
   exportButton.addEventListener('click', function() {
     var selectedRows = selectedTaskTable.getElementsByTagName('tr');
     var rowCount = selectedRows.length;
-  
+
     var csvContent = 'Task,Feedback,Color,Timestamp,Team ID,Take Number\r\n';
-  
+
     for (var i = 1; i < rowCount; i++) {
       var rowData = Array.from(selectedRows[i].querySelectorAll('td')).map(function(column) {
         return column.textContent;
       });
-  
+
       // Exclude empty rows
       if (rowData.some(function(data) {
         return data.trim() !== '';
@@ -159,9 +159,20 @@ document.addEventListener('DOMContentLoaded', function() {
         csvContent += rowData.join(',') + "\r\n";
       }
     }
-  
+
     // Send the CSV content to the server for saving
     saveCSVFile(csvContent);
+
+    // Flash feedback saved message
+    var feedbackSavedMessage = document.createElement('div');
+    feedbackSavedMessage.textContent = 'Feedback saved';
+    feedbackSavedMessage.classList.add('feedback-saved-message');
+    document.body.appendChild(feedbackSavedMessage);
+
+    // Refresh the page after 2 seconds
+    setTimeout(function() {
+      location.reload();
+    }, 2000);
   });
   
   // Function to send the CSV data to the server
