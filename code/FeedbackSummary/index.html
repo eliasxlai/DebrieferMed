@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Video Player</title>
+    <title>Video Player and Table</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Video Player</h1>
-        <form id="videoForm">
-            <label for="teamID">Team ID:</label>
-            <input type="text" id="teamID" required>
-            <label for="takeNumber">Take Number:</label>
-            <input type="text" id="takeNumber" required>
-            <button type="submit">Submit</button>
-        </form>
-        <div class="split-container">
-            <div class="left-pane" id="videoPlayer"></div>
-            <div class="right-pane">
-                <h2>Educator Data</h2>
-                <table id="educatorTable">
-                    <!-- Table content will be dynamically added by JavaScript -->
-                </table>
-            </div>
+        <div class="left-pane">
+            <h2>Video Player</h2>
+            <form id="videoForm">
+                <label for="teamID">Team ID:</label>
+                <input type="number" id="teamID" required>
+                <label for="takeNumber">Take Number:</label>
+                <input type="number" id="takeNumber" required>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="videoPlayer"></div>
+        </div>
+        <div class="right-pane">
+            <h2>Table</h2>
+            <table id="educatorTable"></table>
         </div>
     </div>
     <script src="script.js"></script>
