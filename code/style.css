@@ -1,0 +1,73 @@
+/* style.css */
+
+/* Reset default browser styles */
+body, h1, button {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set background color and text color */
+  body {
+    background-color: #F6F6F6;
+    color: #333333;
+  }
+  
+  /* Add padding and center align content */
+  body, h1 {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Style the heading */
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the buttons */
+  button {
+    display: block;
+    width: 200px;
+    height: 40px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 20px;
+    background-color: #007AFF;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 40px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* Hover effect on buttons */
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Remove underline from button links */
+  button a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Center align button text */
+  button a {
+    display: block;
+    line-height: 40px;
+  }
+  
+  /* Adjust button size for smaller screens */
+  @media (max-width: 480px) {
+    button {
+      width: 160px;
+      height: 32px;
+      font-size: 14px;
+      line-height: 32px;
+    }
+  }
+  

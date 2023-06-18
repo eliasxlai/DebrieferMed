@@ -103,9 +103,21 @@ function appendToCSV(data) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       console.log(xhr.responseText); // Output the server response
+      showMessage("Reflections saved");
+      setTimeout(function() {
+        window.location.href = "../index.html";
+      }, 2000); // Redirect after 2 seconds
     }
   };
   xhr.send("data=" + encodeURIComponent(data));
+}
+
+// Function to show a message on the page
+function showMessage(message) {
+  var messageContainer = document.createElement("div");
+  messageContainer.className = "message";
+  messageContainer.textContent = message;
+  document.body.appendChild(messageContainer);
 }
 
 // Function to export the table data as a CSV and append to the server-side file
